@@ -7,7 +7,7 @@ const schemaCreateContact = Joi.object({
     .max(30)
     .required(),
   email: Joi.string().optional(),
-  phone: Joi.string().optional()
+  phone: Joi.string().pattern(new RegExp('^[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$')).optional()
 })
 
 const schemaUpdateContact = Joi.object({
@@ -16,7 +16,7 @@ const schemaUpdateContact = Joi.object({
     .min(3)
     .max(30)
     .optional('name', 'email'),
-  phone: Joi.string().optional()
+  phone: Joi.string().pattern(new RegExp('^[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$')).optional()
 })
 
 const validate = async (schema, obj, next) => {
