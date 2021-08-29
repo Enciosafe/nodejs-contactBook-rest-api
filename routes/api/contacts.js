@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { validationCreateContact, validationUpdateContact } = require('./validation')
+const { validationCreateContact, validationUpdateContact, validationUpdateFavoriteInContact } = require('./validation')
 const ctrl = require('../../controllers/contacts')
 
 router.get('/', ctrl.getList)
@@ -12,5 +12,7 @@ router.post('/', validationCreateContact, ctrl.addContact)
 router.delete('/:contactId', ctrl.deleteContact)
 
 router.patch('/:contactId', validationUpdateContact, ctrl.updateContact)
+
+router.patch('/:contactId/favorite', validationUpdateFavoriteInContact, ctrl.updateStatusContact)
 
 module.exports = router
