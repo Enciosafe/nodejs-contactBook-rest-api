@@ -2,8 +2,10 @@ const { Contact } = require('./../../model')
 
 const updateStatusContact = async (req, res, next) => {
   try {
-    const contact = await Contact.findByIdAndUpdate({ _id: req.params.contactId }, req.body, { new: true })
-    if (!req.body) {
+    const { id } = req.params
+    const { favorite } = req.body
+    const contact = await Contact.findByIdAndUpdate(id, { favorite }, { new: true })
+    if (!contact) {
       return res.json({ code: 400, message: 'missing field favorite' })
     }
     return contact
