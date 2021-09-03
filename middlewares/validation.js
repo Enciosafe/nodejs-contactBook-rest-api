@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const emailRegexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 const schemaCreateContact = Joi.object({
   name: Joi.string()
@@ -24,6 +25,12 @@ const schemaUpdateFavorite = Joi.object({
   favorite: Joi.boolean()
 })
 
+const schemaSignUpSignIn = Joi.object({
+  password: Joi.string().min(6).required(),
+  email: Joi.string().pattern(emailRegexp).required(),
+  subscription: Joi.string().optional().default('starter'),
+})
+
 const validate = async (schema, obj, next) => {
   try {
     await schema.validateAsync(obj)
@@ -45,5 +52,8 @@ module.exports = {
   },
   validationUpdateFavoriteInContact: (req, res, next) => {
     return validate(schemaUpdateFavorite, req.body, next)
+  },
+  validationSignUpSignIn: (req, res, next) => {
+    return validate(schemaSignUpSignIn, req.body, next)
   }
 }

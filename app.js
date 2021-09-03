@@ -2,6 +2,8 @@ const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
 const contactsRouter = require('./routes/api/contacts')
+const authRouter = require('./routes/api/auth')
+const currentRouter = require('./routes/api/current')
 
 const app = express()
 
@@ -12,9 +14,11 @@ app.use(logger(formatsLogger))
 app.use(express.json())
 
 app.use('/api/contacts', contactsRouter)
+app.use('/api/auth', authRouter)
+app.use('./api/users', currentRouter)
 
 app.use((req, res) => {
-  res.status(404).json({ status: 'fail', code: 404, message: 'Not found' })
+  res.status(404).json({ status: 'fail', code: 404, message: 'Not found!!' })
 })
 
 app.use((err, req, res, next) => {
