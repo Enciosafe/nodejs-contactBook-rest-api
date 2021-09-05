@@ -6,7 +6,7 @@ const schemaCreateContact = Joi.object({
     .alphanum()
     .min(3)
     .max(30),
-  email: Joi.string().optional(),
+  email: Joi.string().pattern(emailRegexp),
   phone: Joi.string().pattern(new RegExp('^[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$')).optional(),
   favorite: Joi.boolean()
 })
