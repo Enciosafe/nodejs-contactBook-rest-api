@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+const { Types, Schema, model } = require('mongoose')
 
 const emailRegexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const phoneRegexp = /^[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/
@@ -10,7 +10,8 @@ const contactSchema = Schema({
   },
   email: {
     type: String,
-    match: emailRegexp
+    match: emailRegexp,
+    unique: true
   },
   phone: {
     type: String,
@@ -19,6 +20,11 @@ const contactSchema = Schema({
   favorite: {
     type: Boolean,
     default: false
+  },
+  owner: {
+    type: Types.ObjectId,
+    ref: 'user',
+    required: true,
   }
 }, { versionKey: false, timestamps: true })
 
