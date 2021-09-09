@@ -7,13 +7,15 @@ const current = async (req, res, _) => {
   if (!user) {
     throw new Unauthorized()
   }
-  const { email, subscription } = user
+  const { email, subscription, avatarURL } = user
   res.json({
     status: 'success',
     code: 200,
     data: {
+      id: id,
       email: email,
-      subscription: subscription
+      subscription: subscription,
+      avatarURL: avatarURL,
     }
   })
 }
